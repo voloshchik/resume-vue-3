@@ -1,13 +1,15 @@
 <template>
   <div class="card card-w70">
-    <h3>Добавьте первый блок, чтобы увидеть результат</h3>
-    <component
-      v-for="block in blocks"
-      :key="block.id"
-      v-bind="{ data: block.value }"
-      :is="'resume-' + block.type"
-    >
-    </component>
+    <div v-if="blocks.length">
+      <component
+        v-for="block in blocks"
+        :key="block.id"
+        v-bind="{ data: block.value }"
+        :is="'resume-' + block.type"
+      >
+      </component>
+    </div>
+    <h3 v-else>Добавьте первый блок, чтобы увидеть результат</h3>
     <!-- <h1>Резюме Nickname</h1>
     <div class="avatar">
       <img

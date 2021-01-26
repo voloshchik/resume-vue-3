@@ -15,13 +15,14 @@
       <textarea v-model="value" id="value" rows="3"></textarea>
     </div>
 
-    <button @click.prevent="addResume" class="btn primary">Добавить</button>
+    <button :disabled="!isValid" @click.prevent="addResume" class="btn primary">Добавить</button>
   </form>
 </template>
 
 <script>
 export default {
   emits: ['addResume'],
+  updated() {},
   data() {
     return {
       type: 'title',
@@ -30,12 +31,16 @@ export default {
   },
   methods: {
     addResume() {
-      if (this.value.length < 5) {
-        return false
-      }
-      console.log('this.type', this.type)
-      console.log('this.value', this.value)
+      // if (this.value.length < 5) {
+      //   return false
+      // }
+
       this.$emit('addResume', { type: this.type, value: this.value, id: Date.now() })
+    },
+  },
+  computed: {
+    isValid() {
+      return this.value.length > 5
     },
   },
 }
