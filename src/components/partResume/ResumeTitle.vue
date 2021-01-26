@@ -1,9 +1,13 @@
 <template>
-  <h1>Резюме Nickname</h1>
+  <h1>{{ $attrs.data }}</h1>
 </template>
 
 <script>
-export default {}
+export default {
+  mounted() {
+    console.log('this.$attrs', this.$attrs)
+  },
+}
 </script>
 
 <style></style>

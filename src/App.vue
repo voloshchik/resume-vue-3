@@ -1,12 +1,12 @@
 <template>
   <div class="container column">
-    <resume-form></resume-form>
+    <resume-form @addResume="addResume"></resume-form>
 
-    <resume-vuews></resume-vuews>
+    <resume-vuews :blocks="blocks"></resume-vuews>
   </div>
   <div class="container">
     <p>
-      <button class="btn primary">Загрузить комментарии</button>
+      <button @click.prevent="" class="btn primary">Загрузить комментарии</button>
     </p>
 
     <resume-coments></resume-coments>
@@ -22,6 +22,19 @@ import ResumeComents from '@/components/ResumeComents'
 import ResumeVuews from '@/components/ResumeVuews'
 
 export default {
+  data() {
+    return {
+      blocks: [],
+    }
+  },
+  methods: {
+    addResume(data) {
+      this.blocks.push(data)
+      console.log('this.blocks', this.blocks)
+    },
+  },
+
+  // eslint-disable-next-line vue/no-unused-components
   components: { AppLoader, ResumeForm, ResumeComents, ResumeVuews },
 }
 </script>
