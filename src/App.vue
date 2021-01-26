@@ -6,12 +6,13 @@
   </div>
   <div class="container">
     <p>
-      <button @click.prevent="" class="btn primary">Загрузить комментарии</button>
+      <button @click.prevent="fetchComments" class="btn primary">Загрузить комментарии</button>
     </p>
-
-    <resume-coments></resume-coments>
-
-    <app-loader></app-loader>
+    <div v-if="comments.length">
+      <resume-coments v-for="comment of comments" :key="comment.id"></resume-coments>
+    </div>
+    div
+    <app-loader v-if="isLoading"></app-loader>
   </div>
 </template>
 
@@ -25,12 +26,29 @@ export default {
   data() {
     return {
       blocks: [],
+      isLoading: false,
+      comments: [],
     }
   },
+  async mounted() {},
   methods: {
     addResume(data) {
       this.blocks.push(data)
       console.log('this.blocks', this.blocks)
+    },
+    async fetchComments() {
+      try {
+        this.isLoading = true
+        const response = await fetch(`https://jsonplaceholder.typicode.com/comments?_limit=4`)
+        const data = await response.json()
+        console.log('data', data)
+        this.comments = data
+        this.isLoading = false
+        console.log(this.comments)
+      } catch (error) {
+        this.isLoading = false
+        console.log(error)
+      }
     },
   },
 

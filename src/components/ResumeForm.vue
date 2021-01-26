@@ -36,6 +36,7 @@ export default {
       // }
 
       this.$emit('addResume', { type: this.type, value: this.value, id: Date.now() })
+      this.value = ''
     },
   },
   computed: {
