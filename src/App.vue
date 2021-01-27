@@ -30,21 +30,49 @@ export default {
       comments: [],
     }
   },
-  async mounted() {},
+  async mounted() {
+    const response = await fetch('https://resume-vue-3-default-rtdb.firebaseio.com/resume.json')
+    const data = await response.json()
+    console.log('data', data)
+    const newData = Object.keys(data).map((key) => {
+      return {
+        ...data[key],
+        id: key,
+      }
+    })
+    console.log('newData', newData)
+    this.blocks = newData
+  },
   methods: {
-    addResume(data) {
-      this.blocks.push(data)
-      console.log('this.blocks', this.blocks)
+    async addResume(data) {
+      console.log('data', data)
+      try {
+        const response = await fetch(
+          'https://resume-vue-3-default-rtdb.firebaseio.com/resume.json',
+          {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          }
+        )
+        const firabase = await response.json()
+        console.log(firabase.name)
+        const newData = { ...data, id: firabase.name }
+        this.blocks.push(newData)
+      } catch (error) {
+        console.log(error)
+      }
     },
     async fetchComments() {
       try {
         this.isLoading = true
         const response = await fetch(`https://jsonplaceholder.typicode.com/comments?_limit=4`)
         const data = await response.json()
-        console.log('data', data)
+
         this.comments = data
         this.isLoading = false
-        console.log(this.comments)
       } catch (error) {
         this.isLoading = false
         console.log(error)
@@ -69,3 +97,5 @@ export default {
   border-radius: 50%;
 }
 </style>
+
+//https://resume-vue-3-default-rtdb.firebaseio.com/
