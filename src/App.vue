@@ -33,6 +33,9 @@ export default {
   async mounted() {
     const response = await fetch('https://resume-vue-3-default-rtdb.firebaseio.com/resume.json')
     const data = await response.json()
+    if (!data) {
+      return
+    }
     console.log('data', data)
     const newData = Object.keys(data).map((key) => {
       return {
